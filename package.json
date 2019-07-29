@@ -4,10 +4,10 @@
     "description": "A coding assessment for Xendit backend interviews",
     "main": "index.js",
     "scripts": {
-        "test": "mocha -r ts-node/register tests/**/*.ts",
+        "test": "yarn lint",
         "start": "ts-node index.ts",
-        "lint": "eslint . --max-warnings 0",
-        "nyc": "nyc mocha tests"
+        "lint": "eslint \"*.ts\" --max-warnings 0",
+        "mocha": "nyc mocha -r ts-node/register tests/**/*.ts"
     },
     "keywords": [
         "Xendit"
@@ -45,7 +45,16 @@
         "branches": 80,
         "lines": 80,
         "functions": 80,
-        "statements": 80
+        "statements": 80,
+        "include": [
+            "src/**/*.ts"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ]
     },
     "pre-push": [
         "test"
