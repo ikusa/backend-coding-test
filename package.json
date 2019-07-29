@@ -1,45 +1,51 @@
 {
-  "name": "backend-coding-test",
-  "version": "1.0.0",
-  "description": "A coding assessment for Xendit backend interviews",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "scripts": {
-    "test": "mocha tests",
-    "start": "node index.js",
-    "lint": "eslint . --max-warnings 0",
-    "nyc": "nyc mocha tests"
-  },
-  "keywords": [
-    "Xendit"
-  ],
-  "author": "Bo",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.16.4",
-    "sqlite3": "^4.0.6",
-    "swagger-ui-express": "^4.0.7",
-    "winston": "3.1.0"
-  },
-  "devDependencies": {
-    "eslint": "^6.1.0",
-    "mocha": "^6.1.4",
-    "nyc": "^14.1.1",
-    "pre-push": "^0.1.1",
-    "supertest": "^4.0.2"
-  },
-  "nyc": {
-    "all": true,
-    "check-coverage": true,
-    "branches": 80,
-    "lines": 80,
-    "functions": 80,
-    "statements": 80
-  },
-  "pre-push": [
-    "test"
-  ]
+    "name": "backend-coding-test",
+    "version": "1.0.0",
+    "description": "A coding assessment for Xendit backend interviews",
+    "main": "index.js",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "mocha tests",
+        "start": "node index.js",
+        "lint": "eslint . --max-warnings 0",
+        "nyc": "nyc mocha tests"
+    },
+    "keywords": [
+        "Xendit"
+    ],
+    "author": "Bo",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "^4.16.4",
+        "sqlite3": "^4.0.6",
+        "swagger-ui-express": "^4.0.7",
+        "winston": "3.1.0"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^1.13.0",
+        "@typescript-eslint/parser": "^1.13.0",
+        "eslint": "^6.1.0",
+        "eslint-config-prettier": "^6.0.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "mocha": "^6.1.4",
+        "nyc": "^14.1.1",
+        "pre-push": "^0.1.1",
+        "prettier": "^1.18.2",
+        "supertest": "^4.0.2",
+        "typescript": "^3.5.3"
+    },
+    "nyc": {
+        "all": true,
+        "check-coverage": true,
+        "branches": 80,
+        "lines": 80,
+        "functions": 80,
+        "statements": 80
+    },
+    "pre-push": [
+        "test"
+    ]
 }
