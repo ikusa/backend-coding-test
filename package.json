@@ -4,7 +4,7 @@
     "description": "A coding assessment for Xendit backend interviews",
     "main": "index.js",
     "scripts": {
-        "test": "yarn lint",
+        "test": "yarn lint && yarn mocha",
         "start": "ts-node index.ts",
         "lint": "eslint \"*.ts\" --max-warnings 0",
         "mocha": "nyc mocha -r ts-node/register tests/**/*.ts"
