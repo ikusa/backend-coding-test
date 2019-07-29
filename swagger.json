@@ -1,0 +1,178 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample API server for a Ride-Hailing App built by xendit team as a coding test for backend software engineer",
+    "version": "1.0.0",
+    "title": "Ride-hailing API"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Ride"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/rides": {
+      "post": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Add a new ride ",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Detailed rides data that need to be saved",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RideInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Ride"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Get all rides history",
+        "description": "Return an array of ride",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Ride"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rides/{rideID}": {
+      "get": {
+        "tags": [
+          "Ride"
+        ],
+        "summary": "Find ride by ID",
+        "description": "Returns a single element array of ride",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "rideID",
+            "in": "path",
+            "description": "ID of ride to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Ride"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Ride": {
+      "type": "object",
+      "required": [
+        "rideID"
+      ],
+      "properties": {
+        "riderID": {
+          "type": "integer"
+        },
+        "startLat": {
+          "type": "integer"
+        },
+        "startLong": {
+          "type": "integer"
+        },
+        "endLat": {
+          "type": "integer"
+        },
+        "endLong": {
+          "type": "integer"
+        },
+        "riderName": {
+          "type": "string"
+        },
+        "driverName": {
+          "type": "string"
+        },
+        "driverVehicle": {
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date"
+        }
+      }
+    },
+    "RideInput": {
+      "type": "object",
+      "required": [
+        "rideID"
+      ],
+      "properties": {
+        "start_lat": {
+          "type": "integer"
+        },
+        "start_long": {
+          "type": "integer"
+        },
+        "end_lat": {
+          "type": "integer"
+        },
+        "end_long": {
+          "type": "integer"
+        },
+        "rider_name": {
+          "type": "string"
+        },
+        "driver_name": {
+          "type": "string"
+        },
+        "driver_vehicle": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
