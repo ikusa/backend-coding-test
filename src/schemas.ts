@@ -1,6 +1,6 @@
-'use strict';
+import { Database } from 'sqlite3';
 
-module.exports = (db) => {
+let schema = (db: Database): Database => {
     const createRideTableSchema = `
         CREATE TABLE Rides
         (
@@ -20,3 +20,4 @@ module.exports = (db) => {
 
     return db;
 };
+export default schema;
