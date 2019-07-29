@@ -8,7 +8,7 @@
     },
     "scripts": {
         "test": "mocha tests",
-        "start": "node index.js",
+        "start": "ts-node index.ts",
         "lint": "eslint . --max-warnings 0",
         "nyc": "nyc mocha tests"
     },
@@ -38,6 +38,7 @@
         "pre-push": "^0.1.1",
         "prettier": "^1.18.2",
         "supertest": "^4.0.2",
+        "ts-node": "^8.3.0",
         "typescript": "^3.5.3"
     },
     "nyc": {
