@@ -1,6 +1,6 @@
 import { Database } from 'sqlite3';
 
-let schema = (db: Database): Database => {
+let buildSchema = (db: Database): Database => {
     const createRideTableSchema = `
         CREATE TABLE Rides
         (
@@ -20,4 +20,4 @@ let schema = (db: Database): Database => {
 
     return db;
 };
-export default schema;
+export default buildSchema;
