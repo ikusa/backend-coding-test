@@ -117,27 +117,14 @@ export default (db: Database) => {
         }
     });
 
-    app.get('/rides/:id', (req, res) => {
-        db.all(`SELECT * FROM Rides WHERE rideID='${req.params.id}'`, function(
-            err,
-            rows,
-        ) {
-            if (err) {
-                return res.send({
-                    error_code: 'SERVER_ERROR',
-                    message: 'Unknown error',
-                });
-            }
-
-            if (rows.length === 0) {
-                return res.send({
-                    error_code: 'RIDES_NOT_FOUND_ERROR',
-                    message: 'Could not find any rides',
-                });
-            }
-
-            res.send(rows);
-        });
+    app.get('/rides/:id', async (req, res) => {
+        try {
+            let rideModel = generateRideModel(db);
+            let rides = await rideModel.getRide(req.params.id);
+            res.send(rides);
+        } catch (e) {
+            res.send(e);
+        }
     });
 
     return app;
