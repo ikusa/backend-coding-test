@@ -1,7 +1,10 @@
 import request from 'supertest';
 import sqlite3 from 'sqlite3';
+import { assert } from 'chai';
+
 import appGenerator from '../src/app';
 import buildSchemas from '../src/schemas';
+import { generateRideModel } from '../src/db/rideModel';
 
 const sqlite3Engine = sqlite3.verbose();
 const db = new sqlite3Engine.Database(':memory:');
@@ -80,14 +83,6 @@ describe('API tests', () => {
                 );
         });
     });
-    describe('GET /rides', () => {
-        it('should fetch ride entries without error', done => {
-            request(app)
-                .get('/rides')
-                .send(rideInput)
-                .expect(200, done);
-        });
-    });
     describe('GET /rides/1', () => {
         it('should fetch ride entry without error', done => {
             request(app)
@@ -107,6 +102,32 @@ describe('API tests', () => {
                     },
                     done,
                 );
+        });
+    });
+    describe('GET /rides', () => {
+        it('should fetch ride entries without error', done => {
+            request(app)
+                .get('/rides')
+                .send(rideInput)
+                .expect(200, done);
+        });
+        it('should fetch ride entries with limit of 5 item', done => {
+            let rideModel = generateRideModel(db);
+            try {
+                for (let index = 0; index < 10; index++) {
+                    rideModel.addRide(rideInput);
+                }
+            } catch (error) {
+                console.log('error >>', error);
+            }
+            request(app)
+                .get('/rides?limit=5')
+                .send(rideInput)
+                .expect(200)
+                .expect(function(res) {
+                    assert(res.body.length === 5, 'returned item not exactly 5');
+                })
+                .end(done);
         });
     });
 });
