@@ -3,6 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './doc/swagger.json';
 import { Database } from 'sqlite3';
 import bodyParser from 'body-parser';
+import { generateRideModel } from './db/rideModel';
 
 const app = express();
 
@@ -11,7 +12,7 @@ const jsonParser = bodyParser.json();
 export default (db: Database) => {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-    app.get('/health', (req, res) => res.send('Healthy'));
+    app.get('/health', (_, res) => res.send('Healthy'));
 
     app.post('/rides', jsonParser, (req, res) => {
         const startLatitude = Number(req.body.start_lat);
@@ -106,25 +107,14 @@ export default (db: Database) => {
             },
         );
     });
-
-    app.get('/rides', (req, res) => {
-        db.all('SELECT * FROM Rides', function(err, rows) {
-            if (err) {
-                return res.send({
-                    error_code: 'SERVER_ERROR',
-                    message: 'Unknown error',
-                });
-            }
-
-            if (rows.length === 0) {
-                return res.send({
-                    error_code: 'RIDES_NOT_FOUND_ERROR',
-                    message: 'Could not find any rides',
-                });
-            }
-
-            res.send(rows);
-        });
+    app.get('/rides', async (_, res) => {
+        try {
+            let rideModel = generateRideModel(db);
+            let rides = await rideModel.getRides();
+            res.send(rides);
+        } catch (e) {
+            res.send(e);
+        }
     });
 
     app.get('/rides/:id', (req, res) => {
