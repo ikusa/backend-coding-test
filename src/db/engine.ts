@@ -12,4 +12,14 @@ let serializeDb = (): Promise<Database> =>
         });
     });
 
-export { serializeDb };
+let mockSerializeDb = (): Promise<Database> => {
+    let db = new sqliteEngine.Database(':memory:');
+    return new Promise(resolve => {
+        db.serialize((): void => {
+            buildSchemas(db);
+            resolve(db);
+        });
+    });
+};
+
+export { serializeDb, mockSerializeDb };
