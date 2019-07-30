@@ -11,10 +11,19 @@ type Ride = {
     driverVehicle: string;
     created: string;
 };
-
+type RideInput = {
+    start_lat: number;
+    start_long: number;
+    end_lat: number;
+    end_long: number;
+    rider_name: string;
+    driver_name: string;
+    driver_vehicle: string;
+};
 type RideModel = {
     getRides: () => Promise<Ride[]>;
     getRide: (id: number) => Promise<Ride>;
+    addRide: (input: RideInput) => Promise<number>;
 };
 
 let generateRideModel = (db: Database): RideModel => {
@@ -58,9 +67,44 @@ let generateRideModel = (db: Database): RideModel => {
             });
         });
     };
+    let addRide = ({
+        start_lat,
+        start_long,
+        end_lat,
+        end_long,
+        driver_name,
+        driver_vehicle,
+        rider_name,
+    }: RideInput): Promise<number> => {
+        return new Promise((resolve, reject) => {
+            db.run(
+                'INSERT INTO Rides(startLat, startLong, endLat, endLong, riderName, driverName, driverVehicle) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                [
+                    start_lat,
+                    start_long,
+                    end_lat,
+                    end_long,
+                    rider_name,
+                    driver_name,
+                    driver_vehicle,
+                ],
+                function(err) {
+                    if (err) {
+                        reject({
+                            error_code: 'SERVER_ERROR',
+                            message: 'Unknown error',
+                        });
+                    }
+
+                    resolve(this.lastID);
+                },
+            );
+        });
+    };
     return {
         getRides,
         getRide,
+        addRide,
     };
 };
 
