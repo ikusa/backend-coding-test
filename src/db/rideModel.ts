@@ -20,32 +20,37 @@ type RideInput = {
     driver_name: string;
     driver_vehicle: string;
 };
+
 type RideModel = {
-    getRides: () => Promise<Ride[]>;
+    getRides: (page?: number, limit?: number) => Promise<Ride[]>;
     getRide: (id: number) => Promise<Ride>;
     addRide: (input: RideInput) => Promise<number>;
 };
 
 let generateRideModel = (db: Database): RideModel => {
-    let getRides = (): Promise<Ride[]> => {
+    let getRides = (page = 1, limit = 25): Promise<Ride[]> => {
         return new Promise((resolve, reject) => {
-            db.all('SELECT * FROM Rides', function(err, rows) {
-                if (err) {
-                    reject({
-                        error_code: 'SERVER_ERROR',
-                        message: 'Unknown error',
-                    });
-                }
+            db.all(
+                'SELECT * FROM Rides ORDER BY rideID LIMIT ?,?',
+                [(page - 1) * limit, limit],
+                function(err, rows) {
+                    if (err) {
+                        reject({
+                            error_code: 'SERVER_ERROR',
+                            message: 'Unknown error',
+                        });
+                    }
 
-                if (rows.length === 0) {
-                    reject({
-                        error_code: 'RIDES_NOT_FOUND_ERROR',
-                        message: 'Could not find any rides',
-                    });
-                }
+                    if (rows.length === 0) {
+                        reject({
+                            error_code: 'RIDES_NOT_FOUND_ERROR',
+                            message: 'Could not find any rides',
+                        });
+                    }
 
-                resolve(rows);
-            });
+                    resolve(rows);
+                },
+            );
         });
     };
     let getRide = (rideId: number): Promise<Ride> => {

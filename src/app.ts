@@ -28,10 +28,10 @@ export default (db: Database) => {
             res.send(e);
         }
     });
-    app.get('/rides', async (_, res) => {
+    app.get('/rides', async (req, res) => {
         try {
             let rideModel = generateRideModel(db);
-            let rides = await rideModel.getRides();
+            let rides = await rideModel.getRides(req.query.page, req.query.limit);
             res.send(rides);
         } catch (e) {
             res.send(e);

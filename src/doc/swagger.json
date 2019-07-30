@@ -56,7 +56,25 @@
                             }
                         }
                     }
-                }
+                },
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Amount of ride fetched",
+                        "required": false,
+                        "type": "integer",
+                        "default": 25
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number of rides fetched",
+                        "required": false,
+                        "type": "integer",
+                        "default": 1
+                    }
+                ]
             }
         },
         "/rides/{rideID}": {
