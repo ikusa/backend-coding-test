@@ -46,6 +46,7 @@
                     "driver_vehicle"
                 ]
             }
-        ]
+        ],
+        "@typescript-eslint/prefer-interface": 0
     }
 }

@@ -2,7 +2,6 @@ import request from 'supertest';
 import sqlite3 from 'sqlite3';
 import appGenerator from '../src/app';
 import buildSchemas from '../src/schemas';
-import logger from '../src/lib/logger';
 
 const sqlite3Engine = sqlite3.verbose();
 const db = new sqlite3Engine.Database(':memory:');
@@ -108,14 +107,6 @@ describe('API tests', () => {
                     },
                     done,
                 );
-        });
-    });
-});
-
-describe('Library tests', () => {
-    describe('Logger', () => {
-        it('should log without error', () => {
-            logger.log('info', 'logging without error');
         });
     });
 });
